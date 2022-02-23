@@ -2,16 +2,19 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+from collections import defaultdict
 
 headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2227.0 Safari/537.36'}
 
 jumia_smphone_link = 'https://www.jumia.co.ke/smartphones/' # many other pages https://www.jumia.co.ke/smartphones/?page=2wq11Q#catalog-listing
 
+all_details_dict = {}
+
 # function to save the data obtained
 def save_product_data(product_details):
     print(product_details)
     # for i in product_details:
-    #     pass
+        
     # print(type(i))
     
     
@@ -73,6 +76,7 @@ def get_product_details(detail):
         product_rating = ''
     else:
         product_rating = product_ratings.text
+        product_rating = product_rating.replace('/', ' / ')
     
     people_rated = more_soup.find('p', {'class':'-fs16 -pts'})
     if not people_rated:
@@ -156,8 +160,8 @@ base_url = 'https://www.jumia.co.ke'
     
 if __name__ == "__main__":    
 
-    response = [get_response(link=f'https://www.jumia.co.ke/smartphones/?page={link}#catalog-listing') for link in range(1,5)]
-    #print(response)
+    response = [get_response(link=f'https://www.jumia.co.ke/smartphones/?page={link}#catalog-listing') for link in range(1,2)]
+    print(response)
     
     #print(f'Found {len(videos)} videos')
     
